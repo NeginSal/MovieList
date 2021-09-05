@@ -1,35 +1,31 @@
-//import { getAllMovies } from "./components/Transportlayer";
-import { useState } from "react";
-import List from "./components/List";
-import MOVIES from "./data.json";
+import React, { useEffect, useState } from "react";
+import { getAllMovies } from "./components/Transportlayer";
+import Manager from "./components/Manager";
 
 const App = () => {
-  const [Keyword, setKeyword] = useState("");
-  const [OverSeven, setOverSeven] = useState(false);
+  const [Movies, setMovie] = useState([]);
+  const [Loading, setLoading] = useState(true);
 
-  function handleKeywordChange(e) {
-    setKeyword(e.target.value);
-  }
-  function handleOverSevenChange(e) {
-    setOverSeven(e.target.checked);
-  }
+  useEffect(() => {
+    getAllMovies().then((response) => {
+      setMovie(
+        response.map((item) => ({
+          id: item.id,
+          name: item.name,
+          rate: item.rate,
+        }))
+      );
+      setLoading(false);
+    });
+  }, []);
 
+  if (Loading) {
+    return "Please wait...";
+  }
   return (
-    <>
-      <h2>FiltrableList!</h2>
-      <div>
-        Keyword:
-        <input type="text" value={Keyword} onChange={handleKeywordChange} />
-      </div>
-      <div>
-        <input type="checkbox" checked={OverSeven} onChange={handleOverSevenChange}/>
-        Only over 7.0
-      </div>
-      <div>
-        <List items={MOVIES} />
-      </div>
-    </>
+    <div>
+      <Manager movies={Movies} />
+    </div>
   );
 };
-
 export default App;

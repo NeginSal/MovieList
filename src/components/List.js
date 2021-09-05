@@ -1,8 +1,8 @@
 import ListItem from "./ListItem";
 
-const List = ({ items }) => {
+const List = ({ items}) => {
   const listItems = items.map((item) => {
-    return <ListItem key={item.id} text={item.name} rate={item.rate} />;
+    return <ListItem key={item.id} text={item.text} rate={item.rate} />;
   });
   return <ul>{listItems}</ul>;
 };
