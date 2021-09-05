@@ -1,6 +1,6 @@
 import { useState } from "react";
-
 import List from "./List";
+import Details from "./Details";
 
 const Manager = ({ movies }) => {
   const [Keyword, setKeyword] = useState("");
@@ -35,16 +35,14 @@ const Manager = ({ movies }) => {
         </div>
         <div>
           Only over 7.0
-          <input
-            type="checkbox"
-            checked={OverSeven}
-            onChange={handleOverSevenChange}
-          />
+          <input type="checkbox" checked={OverSeven} onChange={handleOverSevenChange}/>
         </div>
         <div>
+          <Details id={8}/>
           <List items={data} />
         </div>
       </div>
+
     </div>
   );
 };

@@ -1,7 +1,7 @@
 const ListItem = ({ text, rate }) => {
   return (
     <div>
-      <li>{`${text} , ${rate}`}</li>
+      <li >{`${text} , ${rate}`}</li>
     </div>
   );
 };
