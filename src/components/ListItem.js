@@ -1,7 +1,7 @@
-const ListItem = ({ text, rate }) => {
+const ListItem = ({ text, rate, onClick }) => {
   return (
     <div>
-      <li >{`${text} , ${rate}`}</li>
+      <li onClick={onClick}>{`${text} , ${rate}`}</li>
     </div>
   );
 };

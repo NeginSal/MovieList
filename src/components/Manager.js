@@ -5,6 +5,7 @@ import Details from "./Details";
 const Manager = ({ movies }) => {
   const [Keyword, setKeyword] = useState("");
   const [OverSeven, setOverSeven] = useState(false);
+  const [filmId, setfilmId] = useState(null);
 
   function handleKeywordChange(e) {
     setKeyword(e.target.value);
@@ -17,6 +18,7 @@ const Manager = ({ movies }) => {
       id: item.id,
       text: item.name,
       rate: item.rate,
+      filmId: null,
     }));
     return arr
       .filter((item) =>
@@ -25,6 +27,11 @@ const Manager = ({ movies }) => {
       .filter((item) => (getOverSeven ? item.rate > 7 : true));
   }
   const data = filterItems(Keyword, OverSeven);
+
+  function handleClick(id) {
+    console.log("id", id);
+    setfilmId(id);
+  }
 
   return (
     <div>
@@ -35,14 +42,17 @@ const Manager = ({ movies }) => {
         </div>
         <div>
           Only over 7.0
-          <input type="checkbox" checked={OverSeven} onChange={handleOverSevenChange}/>
+          <input
+            type="checkbox"
+            checked={OverSeven}
+            onChange={handleOverSevenChange}
+          />
         </div>
         <div>
-          <Details id={8}/>
-          <List items={data} />
+          {filmId && <Details id={filmId} />}
+          <List items={data} onClick={handleClick} />
         </div>
       </div>
-
     </div>
   );
 };
