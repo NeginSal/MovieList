@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Loading from "./Loading";
 import { getMovie } from "./Transportlayer";
 //import Loading from "./Loading"
 
@@ -21,6 +22,7 @@ const Details = ({ id, onClickBack }) => {
   }
 
   return <div>
+    loading ? (<Loading/>) :(
       <div>
         <h3>Detail</h3>
         <div>
@@ -29,7 +31,8 @@ const Details = ({ id, onClickBack }) => {
           <button onClick={onClickBack}>Back</button>
         </div>
       </div>
-    </div>;
+    </div>
+    ;
 };
 
 export default Details;

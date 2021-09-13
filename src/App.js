@@ -6,6 +6,7 @@ import Loading from "./components/Loading";
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     getAllMovies().then((response) => {
