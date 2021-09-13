@@ -3,29 +3,26 @@ import { getAllMovies } from "./components/Transportlayer";
 import Manager from "./components/Manager";
 
 const App = () => {
-  const [Movies, setMovie] = useState([]);
-  const [Loading, setLoading] = useState(true);
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getAllMovies().then((response) => {
-      setMovie(
-        response.map((item) => ({
-          id: item.id,
-          name: item.name,
-          rate: item.rate,
-        }))
-      );
+      const movies = response.map((item) => ({
+        id: item.id,
+        text: item.name,
+        rate: item.rate,
+      }));
+      setMovies(movies);
       setLoading(false);
     });
   }, []);
 
-  if (Loading) {
-    return "Please wait...";
+  if (loading) {
+    return <loading />;
   }
   return (
-    <div>
-      <Manager movies={Movies} />
-    </div>
+      <Manager initMovies={movies} />
   );
 };
 export default App;
