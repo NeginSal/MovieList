@@ -7,9 +7,11 @@ const Manager = ({ initMovies }) => {
   const [Keyword, setKeyword] = useState("");
   const [OverSeven, setOverSeven] = useState(false);
   const [filmId, setfilmId] = useState(null);
+  const [mode, setMode] = useState("unDone");
 
   const filterItems = () => {
     return initMovies
+      .filter((item) => (mode === "done" ? item.done : !item.done))
       .filter((item) => item.text.toLowerCase().includes(Keyword.toLowerCase()))
       .filter((item) => (OverSeven ? item.rate > 7 : true));
   };
@@ -31,6 +33,10 @@ const Manager = ({ initMovies }) => {
         keyword={Keyword}
         overseven={OverSeven}
       />
+      <div>
+        <button onClick={() => setMode("unDone")}>UnDone</button>
+        <button onClick={() => setMode("done")}>Done</button>
+      </div>
       <div>
         <List items={filterItems()} onClick={(id) => setfilmId(id)} />
       </div>

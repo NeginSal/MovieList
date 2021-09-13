@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllMovies } from "./components/Transportlayer";
 import Manager from "./components/Manager";
+import Loading from "./components/Loading";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
@@ -12,6 +13,7 @@ const App = () => {
         id: item.id,
         text: item.name,
         rate: item.rate,
+        done: false,
       }));
       setMovies(movies);
       setLoading(false);
@@ -19,10 +21,8 @@ const App = () => {
   }, []);
 
   if (loading) {
-    return <loading />;
+    return <Loading />;
   }
-  return (
-      <Manager initMovies={movies} />
-  );
+  return <Manager initMovies={movies} />;
 };
 export default App;
