@@ -8,11 +8,12 @@ export function getAllMovies() {
     }, 1000);
   });
 };
-export function getServerData(id) {
+export function getMovie(id) {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve("Film #" + id);
-    },3000);
+      const item = DATA.find((i) => i.id === id);
+      resolve(item);
+    },1000);
   });
 }
 
