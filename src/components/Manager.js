@@ -1,59 +1,40 @@
 import { useState } from "react";
 import List from "./List";
 import Details from "./Details";
+import FilterForm from "./FilterForm";
 
-const Manager = ({ movies }) => {
+const Manager = ({ initMovies }) => {
   const [Keyword, setKeyword] = useState("");
   const [OverSeven, setOverSeven] = useState(false);
   const [filmId, setfilmId] = useState(null);
 
-  function handleKeywordChange(e) {
-    setKeyword(e.target.value);
-  }
-  function handleOverSevenChange(e) {
-    setOverSeven(e.target.checked);
-  }
-  function filterItems(getKeyword, getOverSeven) {
-    const arr = movies.map((item) => ({
-      id: item.id,
-      text: item.name,
-      rate: item.rate,
-      filmId: null,
-    }));
-    return arr
-      .filter((item) =>
-        item.text.toLowerCase().includes(getKeyword.toLowerCase())
-      )
-      .filter((item) => (getOverSeven ? item.rate > 7 : true));
-  }
-  const data = filterItems(Keyword, OverSeven);
+  const filterItems = () => {
+    return initMovies
+      .filter((item) => item.text.toLowerCase().includes(Keyword.toLowerCase()))
+      .filter((item) => (OverSeven ? item.rate > 7 : true));
+  };
 
-  function handleClick(id) {
-    console.log("id", id);
-    setfilmId(id);
+  function handleChangeInput({ value, name }) {
+    if (name === "keyword") setKeyword(value);
+    else setOverSeven(value);
+  }
+
+  if (filmId > 0) {
+    return <Details id={filmId} onClickBack={() => setfilmId(null)} />;
   }
 
   return (
-    <div>
+    <>
+      <h2>Filterable List!</h2>
+      <FilterForm
+        onChangeInputs={handleChangeInput}
+        keyword={Keyword}
+        overseven={OverSeven}
+      />
       <div>
-        <div>
-          Keyword
-          <input type="text" value={Keyword} onChange={handleKeywordChange} />
-        </div>
-        <div>
-          Only over 7.0
-          <input
-            type="checkbox"
-            checked={OverSeven}
-            onChange={handleOverSevenChange}
-          />
-        </div>
-        <div>
-          {filmId && <Details id={filmId} />}
-          <List items={data} onClick={handleClick} />
-        </div>
+        <List items={filterItems()} onClick={(id) => setfilmId(id)} />
       </div>
-    </div>
+    </>
   );
 };
 export default Manager;
