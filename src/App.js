@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getAllMovies } from "./components/Transportlayer";
+import Search from "./components/Search";
+import ButtonFilter from "./components/ButtonFilter";
+import CheckBox from "./components/CheckBox";
+import AllMovies from "./components/AllMovies";
 
 const App = () => {
   const [Movies, setMovie] = useState([]);
@@ -60,35 +64,13 @@ const App = () => {
   return (
     <div>
       <div>
-        <div>
-          Keyword
-          <input type="text" value={Keyword} onChange={handleKeywordChange} />
-        </div>
-        <div>
-          <button onClick={() => handleDoneChange("ALL")}>all</button>
-          <button onClick={() => handleDoneChange("DONE")}>done</button>
-          <button onClick={() => handleDoneChange("UNDONE")}>undone</button>
-        </div>
-        <div>
-          Only over 7.0
-          <input
-            type="checkbox"
-            checked={OverSeven}
-            onChange={handleOverSevenChange}
-          />
-        </div>
-        <div>
-          <ul>
-            {filteredMovies.map((movie) => (
-              <li data-id={movie.id}>
-                {`${movie.name} ${movie.rate}`}
-                <button onClick={() => handleDoneBtn(movie.id)}>
-                  {movie.done ? "done" : " undone"}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Search Keyword={Keyword} handleKeywordChange={handleKeywordChange} />
+        <ButtonFilter handleDoneChange={handleDoneChange} />
+        <CheckBox OverSeven={OverSeven} handleOverSevenChange={handleOverSevenChange} />
+        <AllMovies
+          filteredMovies={filteredMovies}
+          handleDoneBtn={handleDoneBtn}
+        />
       </div>
     </div>
   );
